@@ -23,14 +23,22 @@ namespace Alimbio.Server.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Alimbio.Server.Models.alimbio_master_db.Salary>()
+              .HasOne(i => i.Service)
+              .WithMany(i => i.Salaries)
+              .HasForeignKey(i => i.service_id)
+              .HasPrincipalKey(i => i.id);
+
             builder.Entity<Alimbio.Server.Models.alimbio_master_db.Entreprise>()
               .Property(p => p.date_creation)
               .HasDefaultValueSql(@"current_timestamp()");
             this.OnModelBuilding(builder);
         }
 
+        public DbSet<Alimbio.Server.Models.alimbio_master_db.Entreprise> Entreprises { get; set; }
+
         public DbSet<Alimbio.Server.Models.alimbio_master_db.Salary> Salaries { get; set; }
 
-        public DbSet<Alimbio.Server.Models.alimbio_master_db.Entreprise> Entreprises { get; set; }
+        public DbSet<Alimbio.Server.Models.alimbio_master_db.Service> Services { get; set; }
     }
 }

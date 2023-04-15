@@ -19,6 +19,20 @@ namespace Alimbio.Server.Controllers
             this.context = context;
         }
 
+        [HttpGet("/export/alimbio_master_db/entreprises/csv")]
+        [HttpGet("/export/alimbio_master_db/entreprises/csv(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportEntreprisesToCSV(string fileName = null)
+        {
+            return ToCSV(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+        }
+
+        [HttpGet("/export/alimbio_master_db/entreprises/excel")]
+        [HttpGet("/export/alimbio_master_db/entreprises/excel(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportEntreprisesToExcel(string fileName = null)
+        {
+            return ToExcel(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+        }
+
         [HttpGet("/export/alimbio_master_db/salaries/csv")]
         [HttpGet("/export/alimbio_master_db/salaries/csv(fileName='{fileName}')")]
         public async Task<FileStreamResult> ExportSalariesToCSV(string fileName = null)
@@ -33,18 +47,18 @@ namespace Alimbio.Server.Controllers
             return ToExcel(ApplyQuery(await service.GetSalaries(), Request.Query), fileName);
         }
 
-        [HttpGet("/export/alimbio_master_db/entreprises/csv")]
-        [HttpGet("/export/alimbio_master_db/entreprises/csv(fileName='{fileName}')")]
-        public async Task<FileStreamResult> ExportEntreprisesToCSV(string fileName = null)
+        [HttpGet("/export/alimbio_master_db/services/csv")]
+        [HttpGet("/export/alimbio_master_db/services/csv(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportServicesToCSV(string fileName = null)
         {
-            return ToCSV(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+            return ToCSV(ApplyQuery(await service.GetServices(), Request.Query), fileName);
         }
 
-        [HttpGet("/export/alimbio_master_db/entreprises/excel")]
-        [HttpGet("/export/alimbio_master_db/entreprises/excel(fileName='{fileName}')")]
-        public async Task<FileStreamResult> ExportEntreprisesToExcel(string fileName = null)
+        [HttpGet("/export/alimbio_master_db/services/excel")]
+        [HttpGet("/export/alimbio_master_db/services/excel(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportServicesToExcel(string fileName = null)
         {
-            return ToExcel(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+            return ToExcel(ApplyQuery(await service.GetServices(), Request.Query), fileName);
         }
     }
 }

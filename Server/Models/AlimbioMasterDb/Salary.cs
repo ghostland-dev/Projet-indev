@@ -65,5 +65,7 @@ namespace Alimbio.Server.Models.alimbio_master_db
         [Required]
         public ulong site_id { get; set; }
 
+        public Service Service { get; set; }
+
     }
 }

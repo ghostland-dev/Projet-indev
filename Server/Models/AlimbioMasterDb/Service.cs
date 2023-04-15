@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Alimbio.Server.Models.alimbio_master_db
+{
+    [Table("services")]
+    public partial class Service
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public ulong id { get; set; }
+
+        [Required]
+        public string nom_service { get; set; }
+
+        [Required]
+        public string description { get; set; }
+
+        public ICollection<Salary> Salaries { get; set; }
+
+    }
+}

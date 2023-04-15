@@ -29,8 +29,9 @@ builder.Services.AddDbContext<Alimbio.Server.Data.alimbio_master_dbContext>(opti
 builder.Services.AddControllers().AddOData(opt =>
 {
     var oDataBuilderalimbio_master_db = new ODataConventionModelBuilder();
-    oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Salary>("Salaries");
     oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Entreprise>("Entreprises");
+    oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Salary>("Salaries");
+    oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Service>("Services");
     opt.AddRouteComponents("odata/alimbio_master_db", oDataBuilderalimbio_master_db.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
 });
 builder.Services.AddScoped<Alimbio.Client.alimbio_master_dbService>();
