@@ -67,5 +67,7 @@ namespace Alimbio.Server.Models.alimbio_master_db
 
         public Service Service { get; set; }
 
+        public Site Site { get; set; }
+
     }
 }

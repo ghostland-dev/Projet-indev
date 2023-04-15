@@ -89,5 +89,7 @@ namespace Alimbio.Server.Models.alimbio_master_db
         [Required]
         public string immatriculation_tva { get; set; }
 
+        public ICollection<Site> Sites { get; set; }
+
     }
 }

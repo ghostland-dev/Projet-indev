@@ -312,5 +312,99 @@ namespace Alimbio.Client
 
             return await httpClient.SendAsync(httpRequestMessage);
         }
+
+        public async System.Threading.Tasks.Task ExportSitesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/sites/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/sites/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async System.Threading.Tasks.Task ExportSitesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/sites/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/sites/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnGetSites(HttpRequestMessage requestMessage);
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Site>> GetSites(Query query)
+        {
+            return await GetSites(filter:$"{query.Filter}", orderby:$"{query.OrderBy}", top:query.Top, skip:query.Skip, count:query.Top != null && query.Skip != null);
+        }
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Site>> GetSites(string filter = default(string), string orderby = default(string), string expand = default(string), int? top = default(int?), int? skip = default(int?), bool? count = default(bool?), string format = default(string), string select = default(string))
+        {
+            var uri = new Uri(baseUri, $"Sites");
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:filter, top:top, skip:skip, orderby:orderby, expand:expand, select:select, count:count);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetSites(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Site>>(response);
+        }
+
+        partial void OnCreateSite(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> CreateSite(Alimbio.Server.Models.alimbio_master_db.Site site = default(Alimbio.Server.Models.alimbio_master_db.Site))
+        {
+            var uri = new Uri(baseUri, $"Sites");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(site), Encoding.UTF8, "application/json");
+
+            OnCreateSite(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Site>(response);
+        }
+
+        partial void OnDeleteSite(HttpRequestMessage requestMessage);
+
+        public async Task<HttpResponseMessage> DeleteSite(ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Sites({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
+
+            OnDeleteSite(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
+
+        partial void OnGetSiteById(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> GetSiteById(string expand = default(string), ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Sites({id})");
+
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:null, top:null, skip:null, orderby:null, expand:expand, select:null, count:null);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetSiteById(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Site>(response);
+        }
+
+        partial void OnUpdateSite(HttpRequestMessage requestMessage);
+        
+        public async Task<HttpResponseMessage> UpdateSite(ulong id = default(ulong), Alimbio.Server.Models.alimbio_master_db.Site site = default(Alimbio.Server.Models.alimbio_master_db.Site))
+        {
+            var uri = new Uri(baseUri, $"Sites({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, uri);
+
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(site), Encoding.UTF8, "application/json");
+
+            OnUpdateSite(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
     }
 }

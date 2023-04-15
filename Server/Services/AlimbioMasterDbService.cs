@@ -190,6 +190,7 @@ namespace Alimbio.Server
         {
             var itemToDelete = Context.Entreprises
                               .Where(i => i.id == id)
+                              .Include(i => i.Sites)
                               .FirstOrDefault();
 
             if (itemToDelete == null)
@@ -234,6 +235,7 @@ namespace Alimbio.Server
             var items = Context.Salaries.AsQueryable();
 
             items = items.Include(i => i.Service);
+            items = items.Include(i => i.Site);
 
             if (query != null)
             {
@@ -288,6 +290,7 @@ namespace Alimbio.Server
                               .Where(i => i.id == id);
 
             items = items.Include(i => i.Service);
+            items = items.Include(i => i.Site);
   
             var itemToReturn = items.FirstOrDefault();
 
@@ -580,6 +583,191 @@ namespace Alimbio.Server
             }
 
             OnAfterServiceDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportSitesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/sites/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/sites/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportSitesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/sites/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/sites/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnSitesRead(ref IQueryable<Alimbio.Server.Models.alimbio_master_db.Site> items);
+
+        public async Task<IQueryable<Alimbio.Server.Models.alimbio_master_db.Site>> GetSites(Query query = null)
+        {
+            var items = Context.Sites.AsQueryable();
+
+            items = items.Include(i => i.Entreprise);
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(query.Filter))
+                {
+                    if (query.FilterParameters != null)
+                    {
+                        items = items.Where(query.Filter, query.FilterParameters);
+                    }
+                    else
+                    {
+                        items = items.Where(query.Filter);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(query.OrderBy))
+                {
+                    items = items.OrderBy(query.OrderBy);
+                }
+
+                if (query.Skip.HasValue)
+                {
+                    items = items.Skip(query.Skip.Value);
+                }
+
+                if (query.Top.HasValue)
+                {
+                    items = items.Take(query.Top.Value);
+                }
+            }
+
+            OnSitesRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnSiteGet(Alimbio.Server.Models.alimbio_master_db.Site item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> GetSiteById(ulong id)
+        {
+            var items = Context.Sites
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+            items = items.Include(i => i.Entreprise);
+  
+            var itemToReturn = items.FirstOrDefault();
+
+            OnSiteGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnSiteCreated(Alimbio.Server.Models.alimbio_master_db.Site item);
+        partial void OnAfterSiteCreated(Alimbio.Server.Models.alimbio_master_db.Site item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> CreateSite(Alimbio.Server.Models.alimbio_master_db.Site site)
+        {
+            OnSiteCreated(site);
+
+            var existingItem = Context.Sites
+                              .Where(i => i.id == site.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.Sites.Add(site);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(site).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterSiteCreated(site);
+
+            return site;
+        }
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> CancelSiteChanges(Alimbio.Server.Models.alimbio_master_db.Site item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnSiteUpdated(Alimbio.Server.Models.alimbio_master_db.Site item);
+        partial void OnAfterSiteUpdated(Alimbio.Server.Models.alimbio_master_db.Site item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> UpdateSite(ulong id, Alimbio.Server.Models.alimbio_master_db.Site site)
+        {
+            OnSiteUpdated(site);
+
+            var itemToUpdate = Context.Sites
+                              .Where(i => i.id == site.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(site);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterSiteUpdated(site);
+
+            return site;
+        }
+
+        partial void OnSiteDeleted(Alimbio.Server.Models.alimbio_master_db.Site item);
+        partial void OnAfterSiteDeleted(Alimbio.Server.Models.alimbio_master_db.Site item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Site> DeleteSite(ulong id)
+        {
+            var itemToDelete = Context.Sites
+                              .Where(i => i.id == id)
+                              .Include(i => i.Salaries)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnSiteDeleted(itemToDelete);
+
+
+            Context.Sites.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterSiteDeleted(itemToDelete);
 
             return itemToDelete;
         }

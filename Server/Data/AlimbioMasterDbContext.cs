@@ -29,6 +29,18 @@ namespace Alimbio.Server.Data
               .HasForeignKey(i => i.service_id)
               .HasPrincipalKey(i => i.id);
 
+            builder.Entity<Alimbio.Server.Models.alimbio_master_db.Salary>()
+              .HasOne(i => i.Site)
+              .WithMany(i => i.Salaries)
+              .HasForeignKey(i => i.site_id)
+              .HasPrincipalKey(i => i.id);
+
+            builder.Entity<Alimbio.Server.Models.alimbio_master_db.Site>()
+              .HasOne(i => i.Entreprise)
+              .WithMany(i => i.Sites)
+              .HasForeignKey(i => i.entreprise_id)
+              .HasPrincipalKey(i => i.id);
+
             builder.Entity<Alimbio.Server.Models.alimbio_master_db.Entreprise>()
               .Property(p => p.date_creation)
               .HasDefaultValueSql(@"current_timestamp()");
@@ -40,5 +52,7 @@ namespace Alimbio.Server.Data
         public DbSet<Alimbio.Server.Models.alimbio_master_db.Salary> Salaries { get; set; }
 
         public DbSet<Alimbio.Server.Models.alimbio_master_db.Service> Services { get; set; }
+
+        public DbSet<Alimbio.Server.Models.alimbio_master_db.Site> Sites { get; set; }
     }
 }
