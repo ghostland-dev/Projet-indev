@@ -124,5 +124,99 @@ namespace Alimbio.Client
 
             return await httpClient.SendAsync(httpRequestMessage);
         }
+
+        public async System.Threading.Tasks.Task ExportEntreprisesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/entreprises/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/entreprises/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async System.Threading.Tasks.Task ExportEntreprisesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/entreprises/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/entreprises/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnGetEntreprises(HttpRequestMessage requestMessage);
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Entreprise>> GetEntreprises(Query query)
+        {
+            return await GetEntreprises(filter:$"{query.Filter}", orderby:$"{query.OrderBy}", top:query.Top, skip:query.Skip, count:query.Top != null && query.Skip != null);
+        }
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Entreprise>> GetEntreprises(string filter = default(string), string orderby = default(string), string expand = default(string), int? top = default(int?), int? skip = default(int?), bool? count = default(bool?), string format = default(string), string select = default(string))
+        {
+            var uri = new Uri(baseUri, $"Entreprises");
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:filter, top:top, skip:skip, orderby:orderby, expand:expand, select:select, count:count);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetEntreprises(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Entreprise>>(response);
+        }
+
+        partial void OnCreateEntreprise(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Entreprise> CreateEntreprise(Alimbio.Server.Models.alimbio_master_db.Entreprise entreprise = default(Alimbio.Server.Models.alimbio_master_db.Entreprise))
+        {
+            var uri = new Uri(baseUri, $"Entreprises");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(entreprise), Encoding.UTF8, "application/json");
+
+            OnCreateEntreprise(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Entreprise>(response);
+        }
+
+        partial void OnDeleteEntreprise(HttpRequestMessage requestMessage);
+
+        public async Task<HttpResponseMessage> DeleteEntreprise(ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Entreprises({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
+
+            OnDeleteEntreprise(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
+
+        partial void OnGetEntrepriseById(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Entreprise> GetEntrepriseById(string expand = default(string), ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Entreprises({id})");
+
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:null, top:null, skip:null, orderby:null, expand:expand, select:null, count:null);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetEntrepriseById(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Entreprise>(response);
+        }
+
+        partial void OnUpdateEntreprise(HttpRequestMessage requestMessage);
+        
+        public async Task<HttpResponseMessage> UpdateEntreprise(ulong id = default(ulong), Alimbio.Server.Models.alimbio_master_db.Entreprise entreprise = default(Alimbio.Server.Models.alimbio_master_db.Entreprise))
+        {
+            var uri = new Uri(baseUri, $"Entreprises({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, uri);
+
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(entreprise), Encoding.UTF8, "application/json");
+
+            OnUpdateEntreprise(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
     }
 }

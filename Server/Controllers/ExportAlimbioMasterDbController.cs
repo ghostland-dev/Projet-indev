@@ -32,5 +32,19 @@ namespace Alimbio.Server.Controllers
         {
             return ToExcel(ApplyQuery(await service.GetSalaries(), Request.Query), fileName);
         }
+
+        [HttpGet("/export/alimbio_master_db/entreprises/csv")]
+        [HttpGet("/export/alimbio_master_db/entreprises/csv(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportEntreprisesToCSV(string fileName = null)
+        {
+            return ToCSV(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+        }
+
+        [HttpGet("/export/alimbio_master_db/entreprises/excel")]
+        [HttpGet("/export/alimbio_master_db/entreprises/excel(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportEntreprisesToExcel(string fileName = null)
+        {
+            return ToExcel(ApplyQuery(await service.GetEntreprises(), Request.Query), fileName);
+        }
     }
 }

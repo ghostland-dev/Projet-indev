@@ -22,9 +22,15 @@ namespace Alimbio.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Alimbio.Server.Models.alimbio_master_db.Entreprise>()
+              .Property(p => p.date_creation)
+              .HasDefaultValueSql(@"current_timestamp()");
             this.OnModelBuilding(builder);
         }
 
         public DbSet<Alimbio.Server.Models.alimbio_master_db.Salary> Salaries { get; set; }
+
+        public DbSet<Alimbio.Server.Models.alimbio_master_db.Entreprise> Entreprises { get; set; }
     }
 }
