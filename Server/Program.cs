@@ -1,11 +1,12 @@
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Radzen;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OData.ModelBuilder;
+using Microsoft.AspNetCore.OData;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<DialogService>();
@@ -18,11 +19,21 @@ builder.Services.AddSingleton(sp =>
     var server = sp.GetRequiredService<IServer>();
     var addressFeature = server.Features.Get<IServerAddressesFeature>();
     string baseAddress = addressFeature.Addresses.First();
-    return new HttpClient { BaseAddress = new Uri(baseAddress) };
+    return new HttpClient{BaseAddress = new Uri(baseAddress)};
 });
-
+builder.Services.AddScoped<Alimbio.Server.alimbio_master_dbService>();
+builder.Services.AddDbContext<Alimbio.Server.Data.alimbio_master_dbContext>(options =>
+{
+    options.UseMySql(builder.Configuration.GetConnectionString("alimbio_master_dbConnection"), ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("alimbio_master_dbConnection")));
+});
+builder.Services.AddControllers().AddOData(opt =>
+{
+    var oDataBuilderalimbio_master_db = new ODataConventionModelBuilder();
+    oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Salary>("Salaries");
+    opt.AddRouteComponents("odata/alimbio_master_db", oDataBuilderalimbio_master_db.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
+});
+builder.Services.AddScoped<Alimbio.Client.alimbio_master_dbService>();
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -36,15 +47,10 @@ else
 }
 
 app.UseHttpsRedirection();
-
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToPage("/_Host");
-
 app.Run();
