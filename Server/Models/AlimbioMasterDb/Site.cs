@@ -72,5 +72,7 @@ namespace Alimbio.Server.Models.alimbio_master_db
 
         public Entreprise Entreprise { get; set; }
 
+        public Ville Ville { get; set; }
+
     }
 }

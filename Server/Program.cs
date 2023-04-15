@@ -33,6 +33,7 @@ builder.Services.AddControllers().AddOData(opt =>
     oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Salary>("Salaries");
     oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Service>("Services");
     oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Site>("Sites");
+    oDataBuilderalimbio_master_db.EntitySet<Alimbio.Server.Models.alimbio_master_db.Ville>("Villes");
     opt.AddRouteComponents("odata/alimbio_master_db", oDataBuilderalimbio_master_db.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
 });
 builder.Services.AddScoped<Alimbio.Client.alimbio_master_dbService>();

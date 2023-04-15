@@ -74,5 +74,19 @@ namespace Alimbio.Server.Controllers
         {
             return ToExcel(ApplyQuery(await service.GetSites(), Request.Query), fileName);
         }
+
+        [HttpGet("/export/alimbio_master_db/villes/csv")]
+        [HttpGet("/export/alimbio_master_db/villes/csv(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportVillesToCSV(string fileName = null)
+        {
+            return ToCSV(ApplyQuery(await service.GetVilles(), Request.Query), fileName);
+        }
+
+        [HttpGet("/export/alimbio_master_db/villes/excel")]
+        [HttpGet("/export/alimbio_master_db/villes/excel(fileName='{fileName}')")]
+        public async Task<FileStreamResult> ExportVillesToExcel(string fileName = null)
+        {
+            return ToExcel(ApplyQuery(await service.GetVilles(), Request.Query), fileName);
+        }
     }
 }

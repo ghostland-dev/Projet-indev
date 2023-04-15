@@ -406,5 +406,99 @@ namespace Alimbio.Client
 
             return await httpClient.SendAsync(httpRequestMessage);
         }
+
+        public async System.Threading.Tasks.Task ExportVillesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/villes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/villes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async System.Threading.Tasks.Task ExportVillesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/villes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/villes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnGetVilles(HttpRequestMessage requestMessage);
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Ville>> GetVilles(Query query)
+        {
+            return await GetVilles(filter:$"{query.Filter}", orderby:$"{query.OrderBy}", top:query.Top, skip:query.Skip, count:query.Top != null && query.Skip != null);
+        }
+
+        public async Task<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Ville>> GetVilles(string filter = default(string), string orderby = default(string), string expand = default(string), int? top = default(int?), int? skip = default(int?), bool? count = default(bool?), string format = default(string), string select = default(string))
+        {
+            var uri = new Uri(baseUri, $"Villes");
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:filter, top:top, skip:skip, orderby:orderby, expand:expand, select:select, count:count);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetVilles(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Radzen.ODataServiceResult<Alimbio.Server.Models.alimbio_master_db.Ville>>(response);
+        }
+
+        partial void OnCreateVille(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> CreateVille(Alimbio.Server.Models.alimbio_master_db.Ville ville = default(Alimbio.Server.Models.alimbio_master_db.Ville))
+        {
+            var uri = new Uri(baseUri, $"Villes");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(ville), Encoding.UTF8, "application/json");
+
+            OnCreateVille(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Ville>(response);
+        }
+
+        partial void OnDeleteVille(HttpRequestMessage requestMessage);
+
+        public async Task<HttpResponseMessage> DeleteVille(ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Villes({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
+
+            OnDeleteVille(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
+
+        partial void OnGetVilleById(HttpRequestMessage requestMessage);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> GetVilleById(string expand = default(string), ulong id = default(ulong))
+        {
+            var uri = new Uri(baseUri, $"Villes({id})");
+
+            uri = Radzen.ODataExtensions.GetODataUri(uri: uri, filter:null, top:null, skip:null, orderby:null, expand:expand, select:null, count:null);
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+
+            OnGetVilleById(httpRequestMessage);
+
+            var response = await httpClient.SendAsync(httpRequestMessage);
+
+            return await Radzen.HttpResponseMessageExtensions.ReadAsync<Alimbio.Server.Models.alimbio_master_db.Ville>(response);
+        }
+
+        partial void OnUpdateVille(HttpRequestMessage requestMessage);
+        
+        public async Task<HttpResponseMessage> UpdateVille(ulong id = default(ulong), Alimbio.Server.Models.alimbio_master_db.Ville ville = default(Alimbio.Server.Models.alimbio_master_db.Ville))
+        {
+            var uri = new Uri(baseUri, $"Villes({id})");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Patch, uri);
+
+
+            httpRequestMessage.Content = new StringContent(Radzen.ODataJsonSerializer.Serialize(ville), Encoding.UTF8, "application/json");
+
+            OnUpdateVille(httpRequestMessage);
+
+            return await httpClient.SendAsync(httpRequestMessage);
+        }
     }
 }

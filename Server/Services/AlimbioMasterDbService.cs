@@ -604,6 +604,7 @@ namespace Alimbio.Server
             var items = Context.Sites.AsQueryable();
 
             items = items.Include(i => i.Entreprise);
+            items = items.Include(i => i.Ville);
 
             if (query != null)
             {
@@ -658,6 +659,7 @@ namespace Alimbio.Server
                               .Where(i => i.id == id);
 
             items = items.Include(i => i.Entreprise);
+            items = items.Include(i => i.Ville);
   
             var itemToReturn = items.FirstOrDefault();
 
@@ -768,6 +770,189 @@ namespace Alimbio.Server
             }
 
             OnAfterSiteDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportVillesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/villes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/villes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportVillesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/alimbio_master_db/villes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/alimbio_master_db/villes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnVillesRead(ref IQueryable<Alimbio.Server.Models.alimbio_master_db.Ville> items);
+
+        public async Task<IQueryable<Alimbio.Server.Models.alimbio_master_db.Ville>> GetVilles(Query query = null)
+        {
+            var items = Context.Villes.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(query.Filter))
+                {
+                    if (query.FilterParameters != null)
+                    {
+                        items = items.Where(query.Filter, query.FilterParameters);
+                    }
+                    else
+                    {
+                        items = items.Where(query.Filter);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(query.OrderBy))
+                {
+                    items = items.OrderBy(query.OrderBy);
+                }
+
+                if (query.Skip.HasValue)
+                {
+                    items = items.Skip(query.Skip.Value);
+                }
+
+                if (query.Top.HasValue)
+                {
+                    items = items.Take(query.Top.Value);
+                }
+            }
+
+            OnVillesRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnVilleGet(Alimbio.Server.Models.alimbio_master_db.Ville item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> GetVilleById(ulong id)
+        {
+            var items = Context.Villes
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+  
+            var itemToReturn = items.FirstOrDefault();
+
+            OnVilleGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnVilleCreated(Alimbio.Server.Models.alimbio_master_db.Ville item);
+        partial void OnAfterVilleCreated(Alimbio.Server.Models.alimbio_master_db.Ville item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> CreateVille(Alimbio.Server.Models.alimbio_master_db.Ville ville)
+        {
+            OnVilleCreated(ville);
+
+            var existingItem = Context.Villes
+                              .Where(i => i.id == ville.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.Villes.Add(ville);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(ville).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterVilleCreated(ville);
+
+            return ville;
+        }
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> CancelVilleChanges(Alimbio.Server.Models.alimbio_master_db.Ville item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnVilleUpdated(Alimbio.Server.Models.alimbio_master_db.Ville item);
+        partial void OnAfterVilleUpdated(Alimbio.Server.Models.alimbio_master_db.Ville item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> UpdateVille(ulong id, Alimbio.Server.Models.alimbio_master_db.Ville ville)
+        {
+            OnVilleUpdated(ville);
+
+            var itemToUpdate = Context.Villes
+                              .Where(i => i.id == ville.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(ville);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterVilleUpdated(ville);
+
+            return ville;
+        }
+
+        partial void OnVilleDeleted(Alimbio.Server.Models.alimbio_master_db.Ville item);
+        partial void OnAfterVilleDeleted(Alimbio.Server.Models.alimbio_master_db.Ville item);
+
+        public async Task<Alimbio.Server.Models.alimbio_master_db.Ville> DeleteVille(ulong id)
+        {
+            var itemToDelete = Context.Villes
+                              .Where(i => i.id == id)
+                              .Include(i => i.Sites)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnVilleDeleted(itemToDelete);
+
+
+            Context.Villes.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterVilleDeleted(itemToDelete);
 
             return itemToDelete;
         }
