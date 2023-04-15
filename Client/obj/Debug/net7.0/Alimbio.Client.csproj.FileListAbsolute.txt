@@ -843,3 +843,11 @@ C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\Alimbio.Client.dll
 C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\refint\Alimbio.Client.dll
 C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\Alimbio.Client.pdb
 C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\ref\Alimbio.Client.dll
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\wwwroot\_framework\Microsoft.Extensions.Localization.Abstractions.dll
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\wwwroot\_framework\Microsoft.Extensions.Localization.dll
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\wwwroot\_framework\Microsoft.Extensions.Localization.Abstractions.dll.gz
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\wwwroot\_framework\Microsoft.Extensions.Localization.dll.gz
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\Microsoft.Extensions.Localization.dll
+C:\Users\imouy\Desktop\Projet-indev\Client\bin\Debug\net7.0\Microsoft.Extensions.Localization.Abstractions.dll
+C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\build-gz\1Lz5hDG2.gz
+C:\Users\imouy\Desktop\Projet-indev\Client\obj\Debug\net7.0\build-gz\+8Y+JLD2.gz

@@ -3,7 +3,7 @@
   "config": [ ],
   "debugBuild": true,
   "entryAssembly": "Alimbio.Client",
-  "icuDataMode": 0,
+  "icuDataMode": 1,
   "linkerEnabled": false,
   "resources": {
     "assembly": {
@@ -26,6 +26,8 @@
       "Microsoft.Extensions.FileProviders.Physical.dll": "sha256-9xkIbIienaRj9Td2MyWYzL9JmVx6CKbGCPrvJ1Pxfn8=",
       "Microsoft.Extensions.FileSystemGlobbing.dll": "sha256-Gm0yiS5fySh2nZXdCRKZIbASK8sSukwjogLc+a9EBZY=",
       "Microsoft.Extensions.Http.dll": "sha256-QqjUvBFxKOeh8XX3IrmuIesFycYZMmwrhsRakmXvrXE=",
+      "Microsoft.Extensions.Localization.dll": "sha256-haKiNQnYpYCG5rVH8RDq3N3hgBwZKZGD+OGGVXrFRlA=",
+      "Microsoft.Extensions.Localization.Abstractions.dll": "sha256-lcRqnGh6upeeDywRXUIsYctXzKeMFQ0ajxs5uDCcVwY=",
       "Microsoft.Extensions.Logging.dll": "sha256-WMsuY8rhtg+vvssGFSR7ZLKhqYPAzOi538IXMoiJ6bI=",
       "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-7zoKnNaWqWOrjF2eX3dFetJL+I03xqvCzORtFB4Ws08=",
       "Microsoft.Extensions.Options.dll": "sha256-rYT8laJlOlF0qyGuqjSmgDWb3Mk5aO1P2d9ojmaAuL0=",
@@ -203,13 +205,13 @@
       "mscorlib.dll": "sha256-qqpKd+W+AFb6UxudEYEKzrz7ma81p5LrWUwPBVvHV4U=",
       "netstandard.dll": "sha256-OYYuPT3JUknj4LdYIa58zF7kDB3tCnLzjCSuhEjtKXM=",
       "System.Private.CoreLib.dll": "sha256-EVS7zPxPV\/41g2mzPwdXtwiigWxI\/SeAHme1IgyD6tc=",
-      "Alimbio.Client.dll": "sha256-48FZFrZe1E4GaG2QsgFsLH\/AcrfXgCmFaLBxzddNZT4="
+      "Alimbio.Client.dll": "sha256-A2y1vd1PUFlq8RKVp9pjsYx9XyEkA3MmQXEdMeGZ7HA="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Alimbio.Client.pdb": "sha256-dbJWL72A1B7EEOXHG7ElKjAYGXZjesVblMVHCHmBlWc="
+      "Alimbio.Client.pdb": "sha256-6kzNxQSa49GpPgLHk9vxxBT4s6KQCiAsBTVjSGmkLts="
     },
     "runtime": {
       "dotnet.7.0.5.tqa5ztdd55.js": "sha256-codB25EodaFEP43MDCfMBuKXU4LqurUKnQrpoMIFnPs=",

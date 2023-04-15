@@ -37,6 +37,7 @@ builder.Services.AddControllers().AddOData(opt =>
     opt.AddRouteComponents("odata/alimbio_master_db", oDataBuilderalimbio_master_db.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
 });
 builder.Services.AddScoped<Alimbio.Client.alimbio_master_dbService>();
+builder.Services.AddLocalization();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -53,6 +54,7 @@ else
 app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
+app.UseRequestLocalization(options => options.AddSupportedCultures("fr").AddSupportedUICultures("fr").SetDefaultCulture("fr"));
 app.UseRouting();
 app.MapRazorPages();
 app.MapControllers();

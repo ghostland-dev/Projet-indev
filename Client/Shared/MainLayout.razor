@@ -1,4 +1,5 @@
 @inherits LayoutComponentBase
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MainLayout> L
 <RadzenDialog />
 <RadzenNotification />
 <RadzenTooltip />
@@ -11,7 +12,9 @@
                 <RadzenSidebarToggle Click="@SidebarToggleClick"></RadzenSidebarToggle>
             </RadzenColumn>
             <RadzenColumn Size="7">
-                <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"></RadzenStack>
+                <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+                    <CulturePicker />
+                </RadzenStack>
             </RadzenColumn>
         </RadzenRow>
     </RadzenHeader>

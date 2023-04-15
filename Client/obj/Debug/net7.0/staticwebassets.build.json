@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "rPveJ7Ttqbjnu9947I4+JRpXM0xOlH7hK0ha9MhcxSo=",
+  "Hash": "uGHaDPjljQx5DF2yqO/XDIhayjs+KZGMKnxbMQkEvHg=",
   "Source": "Alimbio.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -1120,6 +1120,40 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.Http.dll"
+    },
+    {
+      "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll",
+      "SourceId": "Alimbio.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.Abstractions.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.Localization.Abstractions.dll"
+    },
+    {
+      "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll",
+      "SourceId": "Alimbio.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.localization\\7.0.0\\lib\\net7.0\\Microsoft.Extensions.Localization.dll"
     },
     {
       "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Logging.Abstractions.dll",
@@ -4148,6 +4182,23 @@
       "OriginalItemSpec": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.Dynamic.Runtime.dll"
     },
     {
+      "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\obj\\Debug\\net7.0\\build-gz\\+8Y+JLD2.gz",
+      "SourceId": "Alimbio.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.Abstractions.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.Abstractions.dll"
+    },
+    {
       "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\obj\\Debug\\net7.0\\build-gz\\+d1HviYd.gz",
       "SourceId": "Alimbio.Client",
       "SourceType": "Computed",
@@ -4282,6 +4333,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Configuration.FileExtensions.dll"
+    },
+    {
+      "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\obj\\Debug\\net7.0\\build-gz\\1Lz5hDG2.gz",
+      "SourceId": "Alimbio.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Microsoft.Extensions.Localization.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Microsoft.Extensions.Localization.dll"
     },
     {
       "Identity": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\obj\\Debug\\net7.0\\build-gz\\2cn2T4B4.gz",

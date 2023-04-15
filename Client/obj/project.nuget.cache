@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "skAf0MW2SM7keJsNLtLEotnRJg0kUF6FZKVdonpuUCrmIvkLCUd0TjB+yR3rMMhWISyPyrxgS+EfCPa+SJW9Ow==",
+  "dgSpecHash": "ys09s30GEW8T0HcCTSeKmABajAABzG2g0jLmvdPg7TzBfHV/YrPgJcpxqpm2QBTm70WOn1qNQycoumDAIhKS8A==",
   "success": true,
   "projectFilePath": "C:\\Users\\imouy\\Desktop\\Projet-indev\\Client\\Alimbio.Client.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,8 @@
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\7.0.0\\microsoft.extensions.fileproviders.physical.7.0.0.nupkg.sha512",
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\7.0.0\\microsoft.extensions.filesystemglobbing.7.0.0.nupkg.sha512",
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.http\\7.0.0\\microsoft.extensions.http.7.0.0.nupkg.sha512",
+    "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.localization\\7.0.0\\microsoft.extensions.localization.7.0.0.nupkg.sha512",
+    "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\7.0.0\\microsoft.extensions.localization.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\imouy\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
